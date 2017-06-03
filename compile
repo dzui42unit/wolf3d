@@ -1,0 +1,3 @@
+First of all go to libmlx and do make rule
+Than
+gcc *.c -lmlx -lXext -lX11 -L ./libmlx/ -I ./libmlx/ -lm
