@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw_map.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 16:31:04 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/16 16:44:56 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wolf.h"
 
 void	draw_rect(t_env *world, int i, int j, int color)
@@ -46,15 +34,21 @@ void	draw_map(t_env *world)
 		j = 0;
 		while (j < world->size)
 		{
-			if (world->map[i][j] > 0 && world->map[i][j])
-				draw_rect(world, i, j, 0);
-			else if (i == (int)world->player.player_x
+			if (world->path_map[i][j] == -1)
+				draw_rect(world, i, j, 0x00D3D3D3);
+			if (i == (int)world->player.player_x
 					&& j == (int)world->player.player_y)
 				draw_rect(world, i, j, 0x000000FF);
-			else if (i == world->exit_x && j == world->exit_y)
-				draw_rect(world, i, j, 0x00FF00FF);
-			else
-				draw_rect(world, i, j, 0x00FFFFFF);
+			if (world->path_map[i][j] == -3 || world->path_map[i][j] > 0)
+				draw_rect(world, i, j, 0x00000000);
+			if (i == (int)world->exit_x && j == (int)world->exit_y)
+				draw_rect(world, i, j, 0x000000FF);
+			if (world->path_map[i][j] == -4 && world->path_activated)
+				draw_rect(world, i, j, 0x0000A5FF);
+			if (world->path_map[i][j] == -4 && !world->path_activated)
+				draw_rect(world, i, j, 0x00000000);
+			if (i == (int)world->player.player_x && j == (int)world->player.player_y)
+				draw_rect(world, i, j, 0x0000FF00);
 			j++;
 		}
 		i++;

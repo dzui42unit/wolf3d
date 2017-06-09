@@ -1,15 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   wolf.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/05 17:17:11 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/20 17:02:12 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+// MAZE_3D
+//MAZE_RUNNER
 #ifndef WOLF_H
 # define WOLF_H
 # define WIDTH 860
@@ -93,6 +83,7 @@ typedef	struct	s_env
 	void		*win;
 	void		*img;
 	int			**map;
+	int			**path_map;
 	int			*directions;
 	int			size;
 	int			start;
@@ -102,6 +93,7 @@ typedef	struct	s_env
 	t_point		p1;
 	t_point		p2;
 	t_line		line;
+	int			path_activated;
 	int			size_img;
 	int			*data;
 	int			bpp;
@@ -164,5 +156,7 @@ int				get_green(int color);
 int				get_blue(int color);
 int				*generate_direction(void);
 void			ft_draw_controls(t_env *world);
+int				ft_find_path(t_env *world);
+void			ft_write_path_map(t_env *world);
 
 #endif

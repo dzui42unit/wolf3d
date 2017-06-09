@@ -1,16 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   wolf.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/20 17:02:25 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/20 17:02:33 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wolf.h"
+#include <stdio.h>
 
 int		ft_wolf(t_env *w)
 {
@@ -18,6 +7,7 @@ int		ft_wolf(t_env *w)
 
 	x = 0;
 	clear_image(w);
+	ft_find_path(w);
 	while (x < WIDTH)
 	{
 		set_ray_init(&(w->player), &(w->rc), x);
@@ -63,6 +53,7 @@ int		main(void)
 	t_env	w;
 
 	start_generation(&w);
+	ft_write_path_map(&w);
 	w.player.player_x = 2.5;
 	w.player.player_y = 2.5;
 	w.player.dir_x = -1;
@@ -74,6 +65,7 @@ int		main(void)
 	w.flag.flag_l = 0;
 	w.flag.flag_r = 0;
 	w.flag.flag_s = 0;
+	w.path_activated = 0;
 	w.rc.time = 0.0;
 	w.rc.old_time = 0.0;
 	create_win_and_text(&w);

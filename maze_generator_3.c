@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   maze_generator_3.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 16:31:53 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/16 16:32:01 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wolf.h"
 
 void	generate_maze(t_env *world)
@@ -19,10 +7,12 @@ void	generate_maze(t_env *world)
 
 	i = 0;
 	world->map = (int **)malloc(sizeof(int *) * world->size);
+	world->path_map = (int **)malloc(sizeof(int *) * world->size);
 	while (i < world->size)
 	{
 		j = 0;
 		world->map[i] = (int *)malloc(sizeof(int) * world->size);
+		world->path_map[i] = (int *)malloc(sizeof(int) * world->size);
 		while (j < world->size)
 		{
 			world->map[i][j] = 1;

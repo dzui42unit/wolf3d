@@ -1,16 +1,76 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   maze_generator_1.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/08 18:32:57 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/08 18:33:12 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wolf.h"
+
+int		ft_find_path(t_env *world)
+{
+	int	stop;
+	int x_dir[4] = { 1, -1, 0, 0 };
+	int	y_dir[4] = { 0, 0, 1, -1 };
+	int	flag;
+	int i;
+	int j;
+	int d;
+	int k;
+	int i_x;
+	int i_y;
+
+	flag = 0;
+	d = 0;
+	world->path_map[(int)world->player.player_x][(int)world->player.player_y] = d;
+	while (!flag && world->path_map[world->exit_x][world->exit_y] == -2)
+	{
+		flag = 1;
+		i = 0;
+		while (i < world->size)
+		{
+			j = 0;
+			while (j < world->size)
+			{
+				if (world->path_map[i][j] == d)
+				{
+					k = 0;
+					while (k < 4)
+					{
+						i_x = x_dir[k] + i;
+						i_y = y_dir[k] + j;
+						if (i_x >= 0 && i_x < world->size
+							&& i_y >= 0 && i_y < world->size && (world->path_map[i_x][i_y] == -3
+								|| world->path_map[i_x][i_y] == -2))
+						{
+							world->path_map[i_x][i_y] = d + 1;
+							flag = 0;
+						}
+						k++;
+					}
+				}
+				j++;
+			}
+			i++;
+		}
+		d++;
+	}
+	i = world->exit_x;
+	j = world->exit_y;
+	while (d > 0)
+	{
+		d--;
+		k = 0;
+		while (k < 4)
+		{
+			i_x = i + x_dir[k];
+			i_y = j + y_dir[k];
+			if (i_x >= 0 && i_x < world->size
+				&& i_y >= 0 && i_y < world->size && world->path_map[i_x][i_y] == d)
+			{
+				world->path_map[i_x][i_y] = -4;
+				i = i + x_dir[k];
+				j = j + y_dir[k];
+				break ;
+			}
+			k++;
+		}
+	}
+}
+
 
 void	make_new_maze(t_env *world)
 {
@@ -21,6 +81,31 @@ void	make_new_maze(t_env *world)
 		world->player.player_y = 2.5;
 		ft_free_map(world);
 		start_generation(world);
+	}
+	ft_write_path_map(world);
+}
+
+void	ft_write_path_map(t_env *world)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < world->size)
+	{
+		j = 0;
+		while (j < world->size)
+		{
+			if (world->map[i][j] == 1 || world->map[i][j] == 2
+				|| world->map[i][j] == 3 || world->map[i][j] == 4)
+				world->path_map[i][j] = -1;
+			if (world->map[i][j] == 0)
+				world->path_map[i][j] = -3;
+			if (i == world->exit_x && j == world->exit_y)
+				world->path_map[i][j] = -2;
+			j++;
+		}
+		i++;
 	}
 }
 

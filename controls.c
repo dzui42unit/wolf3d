@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   controls.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dzui <marvin@42.fr>                        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 16:28:32 by dzui              #+#    #+#             */
-/*   Updated: 2017/03/16 16:28:38 by dzui             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "wolf.h"
 
 void	ft_movement(t_env *world)
@@ -48,6 +36,10 @@ int		press_key(int key_code, t_env *world)
 		world->player.speed_const = 5.0;
 	if (key_code == 65507)
 		world->player.speed_const = 0.5;
+	if (key_code == 112)
+	{
+		world->path_activated = !world->path_activated;
+	}
 	return (0);
 }
 
